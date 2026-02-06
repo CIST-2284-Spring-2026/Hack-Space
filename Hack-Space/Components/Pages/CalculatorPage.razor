@@ -1,0 +1,24 @@
+@page "/calculator"
+@rendermode InteractiveServer
+ 
+<h3>Interactive Server Side Demo</h3>
+ 
+<input type="number" @bind-value="num1"/>
+<input type="number" @bind-value="num2"/>
+<button type="button" @onclick="BtnClicked">Multiply</button>
+ 
+<p>
+    @text
+</p>
+ 
+@code {
+    private string text = "Please click the button";
+    private float? num1;
+    private float? num2;
+ 
+    private void BtnClicked()
+    {
+        float? result = num1 * num2;
+        text = $"Clicked! {result}";
+    }
+}
