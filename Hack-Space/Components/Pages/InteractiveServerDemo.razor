@@ -1,0 +1,19 @@
+@page "/isr-demo"
+@rendermode InteractiveServer
+ 
+<h3>Interactive Server Side Demo</h3>
+<input type="text" @bind-value="userInput"/>
+<button type="button" @onclick="BtnClicked">Submit</button>
+<p>
+    @text
+</p>
+ 
+@code {
+    private string text = "Please click the button";
+    private string? userInput;
+ 
+    private void BtnClicked()
+    {
+        text = $"Clicked!";
+    }
+}
