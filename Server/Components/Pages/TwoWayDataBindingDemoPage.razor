@@ -1,0 +1,12 @@
+@page "/two-way-data-binding"
+@rendermode InteractiveServer
+ 
+<h3>Two Way Data Binding Demo Page</h3>
+ 
+<input @bind="userName" @bind:event="oninput"/>
+<input @bind="userName" />
+ 
+<p>Current username: @userName</p>
+@code {
+    private string userName = "";
+}

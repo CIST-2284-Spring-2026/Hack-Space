@@ -1,0 +1,15 @@
+@page "/for-while-demo"
+<h3>For And While Demo</h3>
+@{
+    var numbers = Enumerable.Range(1, 5);
+}
+ 
+<div>
+    @for(int i = 0; i < numbers.Count(); i++)
+    {
+        <span>@numbers.ElementAt(i)</span>
+    }
+</div>
+@code {
+ 
+}

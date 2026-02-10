@@ -1,0 +1,14 @@
+@page "/ternary-operator"
+@rendermode InteractiveServer
+<h3>Ternary Operator Demo Page</h3>
+ 
+<button class="btn btn-primary" @onclick = "Toggle">@(isactive?"Active":"Not Active")</button>
+ 
+@code {
+    bool isactive = true;
+ 
+    private void Toggle()
+    {
+        isactive = !isactive;
+    }
+}

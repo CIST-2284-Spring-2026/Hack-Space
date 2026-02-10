@@ -1,0 +1,26 @@
+@page "/calling-methods"
+<h3>Calling Methods Demo Page</h3>
+ 
+<div>
+    <p>Total Price: @CalculateTotalPrice()</p>
+    <p>Formatted Date: @FormatDate()</p>
+</div>
+ 
+@code {
+    List<decimal> prices = new List<decimal>() { 10.0m, 20.5m, 30.7m };
+ 
+    private decimal CalculateTotalPrice()
+    {
+        decimal total = 0;
+        foreach(decimal price in prices)
+        {
+            total += price;
+        }
+        return total;
+    }
+ 
+    private string FormatDate()
+    {
+        return DateTime.Now.ToString("F");
+    }
+}
