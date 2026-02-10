@@ -2,9 +2,9 @@
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.0.0
 MinimumVisualStudioVersion = 16.0.0.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hack-Space", "Hack-Space\Hack-Space.csproj", "{5DC74C58-9FBD-4091-BE78-38E578BDA396}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{5DC74C58-9FBD-4091-BE78-38E578BDA396}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hack-Space.Client", "Hack-Space.Client\Hack-Space.Client.csproj", "{9276F878-19AB-4F7C-845A-4CEC224BCEE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{9276F878-19AB-4F7C-845A-4CEC224BCEE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
