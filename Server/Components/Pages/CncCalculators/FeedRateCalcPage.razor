@@ -1,0 +1,43 @@
+@page "/feedratecalc"
+@rendermode InteractiveServer
+@using Common.Models
+ 
+<PageTitle>Feed Rate Calculator</PageTitle>
+<h1>Feed Rate Calculator</h1>
+ 
+<p>This is the Feed Rate Calculator page. </p>
+ 
+<EditForm Model="feedRateCalc" OnSubmit="OnSubmitFeedRateData">
+    <div class="mb-3">
+        <label class="form-label" for="rpm">RPM</label>
+        <input class="form-control" type="number" step="any" id="rpm" @bind="feedRateCalc.RPM" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="numFlutes">Num Flutes</label>
+        <input class="form-control" type="number" id="numFlutes" @bind="feedRateCalc.NumFlutes" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="chipLoad">Chip Load</label>
+        <input class="form-control" type="number" step="any" id="chipLoad" @bind="feedRateCalc.ChipLoad" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="units">Units</label>
+        <input class="form-control" type="text" id="units" @bind="feedRateCalc.Units" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+<p>
+    @message
+</p>
+<p>
+    <a href="cnc-calculators">Return to CNC Calculators Page"</a>
+</p>
+@code {
+    CNCFeedRateCalc feedRateCalc = new CNCFeedRateCalc();
+    private string message = "Please fill out form and click submit.";
+ 
+    private void OnSubmitFeedRateData()
+    {
+        message = $"The best starting feedrate is {feedRateCalc.FeedRate} {feedRateCalc.Units} per minute.";
+    }
+}
