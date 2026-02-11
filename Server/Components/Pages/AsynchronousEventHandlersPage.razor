@@ -1,0 +1,19 @@
+@page "/asynchronous-event-handlers"
+@rendermode InteractiveServer
+ 
+<h3>Asynchronous Event Handlers Tutorial</h3>
+ 
+<button @onclick="OnButtonClickAsync">Click Me</button>
+ 
+<p>@message</p>
+ 
+@code {
+    private string message = "Waiting for button click...";
+ 
+    private async Task OnButtonClickAsync()
+    {
+        message = "Processing...";
+        await Task.Delay(2000); // Simulate an asynchronous operation
+        message = "Button clicked and processed asynchronously!";
+    }
+}

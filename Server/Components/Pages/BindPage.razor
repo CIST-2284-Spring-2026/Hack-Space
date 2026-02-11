@@ -1,0 +1,11 @@
+@page "/bind"
+@rendermode InteractiveServer
+ 
+<h3>Bind Tutorial</h3>
+ 
+<input @bind="inputValue" />
+<p>You entered: @inputValue</p>
+ 
+@code {
+    private string inputValue = "Please enter text";
+}

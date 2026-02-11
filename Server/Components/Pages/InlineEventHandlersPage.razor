@@ -1,0 +1,18 @@
+@page "/inline-event-handlers"
+@rendermode InteractiveServer
+ 
+<h3>Inline Event Handlers</h3>
+@foreach (var item in items)
+{
+    <button @onclick="() => OnClick(item)">Click Me</button>
+}
+ 
+<p>@message</p>
+@code {
+    List<string> items = new List<string> { "Button 1", "Button 2", "Button 3" };
+    private string message = "Not clicked yet.";
+    private void OnClick(string item)
+    {
+        message = $"{item} clicked!";
+    }
+}

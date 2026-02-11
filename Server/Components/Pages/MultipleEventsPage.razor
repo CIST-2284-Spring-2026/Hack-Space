@@ -1,0 +1,21 @@
+@page "/multiple-events"
+@rendermode InteractiveServer
+ 
+<h3>Multiple Events Example</h3>
+ 
+<input @bind="text" @onfocus="() => isFocused = true" @onblur="() => isFocused = false" />
+ 
+<button class="@buttonStyle"
+    @onmouseenter='() => buttonStyle = "btn btn-primary"'
+    @onmouseleave='() => buttonStyle = "btn btn-outline-primary"'>
+    Hover over me
+</button>
+ 
+<p>Focused: @isFocused</p>
+ 
+@code {
+ 
+    string buttonStyle = "btn btn-outline-primary";
+    private string text = string.Empty;
+    private bool isFocused = false;
+}

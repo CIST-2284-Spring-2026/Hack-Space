@@ -1,0 +1,46 @@
+@page "/edit-form"
+@using System.ComponentModel.DataAnnotations
+ 
+@rendermode InteractiveServer
+ 
+<h3>Edit Form Tutorial</h3>
+ 
+<EditForm Model="user" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+ 
+    <div>
+        <label for="name">Name:</label>
+        <InputText id="name" @bind-Value="user.Name" />
+        <ValidationMessage For="@(() => user.Name)" />
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <InputText id="email" type="email" @bind-Value="user.Email" />
+        <ValidationMessage For="@(() => user.Email)" />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+ 
+<p>@message</p>
+ 
+@code {
+    private User user = new User();
+ 
+    private string message = "Fill out the form and submit.";
+ 
+    private void HandleValidSubmit()
+    {
+        message = $"Submitted Name: {user.Name}, Email: {user.Email}";
+    }
+ 
+    public class User
+    {
+        [Required]
+        public string Name { get; set; } = string.Empty;
+ 
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+    }
+}

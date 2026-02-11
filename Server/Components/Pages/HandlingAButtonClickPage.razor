@@ -1,0 +1,17 @@
+@page "/handling-a-button-click"
+@rendermode InteractiveServer
+ 
+<h3>Handling a Button Click</h3>
+ 
+<button @onclick="OnButtonClick">Click Me!</button>
+ 
+<p>@message</p>
+ 
+@code {
+    private string message = "Button not clicked yet.";
+ 
+    private void OnButtonClick()
+    {
+        message = "Button was clicked!";
+    }
+}

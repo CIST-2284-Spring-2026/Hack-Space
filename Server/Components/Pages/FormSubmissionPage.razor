@@ -1,0 +1,29 @@
+@page "/form-submission"
+@rendermode InteractiveServer
+ 
+<h3>Form Submission Tutorial</h3>
+ 
+<form @onsubmit="HandleSubmit">
+    <div>
+        <label for="name">Name:</label>
+        <input id="name" @bind="name" />
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" @bind="email" />
+    </div>
+    <button type="submit">Submit</button>
+</form>
+ 
+<p>@message</p>
+@code {
+    private string name = string.Empty;
+    private string email = string.Empty;
+ 
+    private string message = "Enter your details and submit the form.";
+ 
+    private void HandleSubmit()
+    {
+        message = $"Submitted Name: {name}, Email: {email}";
+    }
+}

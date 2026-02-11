@@ -1,0 +1,21 @@
+@page "/input-changes"
+@rendermode InteractiveServer
+ 
+<h3>Input Changes Tutorial</h3>
+ 
+<input @onchange="HandleChange" />
+<input @oninput="HandleInput" />
+<p>You entered: @inputValue</p>
+@code {
+    private string inputValue = "Please enter text";
+ 
+    private void HandleChange(ChangeEventArgs e)
+    {
+        inputValue = e.Value?.ToString() ?? string.Empty;
+    }
+ 
+    private void HandleInput(ChangeEventArgs e)
+    {
+        inputValue = e.Value?.ToString() ?? string.Empty;
+    }
+}
