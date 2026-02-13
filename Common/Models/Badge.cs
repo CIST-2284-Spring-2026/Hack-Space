@@ -1,13 +1,11 @@
-public class Badge
+namespace Common.Models
 {
-    public Guid Id { get; set; } = Guid.Empty;
-
-public string? Title { get; set; } 
-
-public string? Description { get; set; } 
-
-public string? TurnInInstructions { get; set; }
-
-public bool? IsVisible { get; set; } = false;
-
+    public class Badge
+    {
+        public Guid Id { get; set; } = Guid.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string TurnInInstructions { get; set; } = string.Empty;
+        public bool IsVisible { get; set; } = false;
+    }
 }

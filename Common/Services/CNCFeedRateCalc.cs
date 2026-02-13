@@ -1,4 +1,4 @@
-namespace Common.Models
+namespace Common.Services
 {
     public class CNCFeedRateCalc
     {
