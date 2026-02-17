@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+ 
 namespace Common.Services
 {
     public class CNCFeedRateCalc
@@ -14,6 +16,8 @@ namespace Common.Services
             CalcFeeRate();
         }
         private float rpm = 0.0f;
+        [Required]
+        [Range(0, 100000)]
         public float RPM
         {
             get { return rpm; }
@@ -21,6 +25,9 @@ namespace Common.Services
         }
  
         private int numFlutes;
+ 
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Must have at least one flute.")]
         public int NumFlutes
         {
             get { return numFlutes; }
@@ -28,12 +35,15 @@ namespace Common.Services
         }
  
         private float chipLoad;
+        [Required]
+        [Range(0, float.MaxValue)]
         public float ChipLoad
         {
             get { return chipLoad; }
             set { chipLoad = value; CalcFeeRate(); }
         }
  
+        [Required]
         public string Units { get; set; } = "mm";
         public float FeedRate { get; private set; }
  
