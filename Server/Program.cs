@@ -5,6 +5,8 @@ using Client.Pages;
 using Server.Components;
 using Server.Components.Account;
 using Server.Data;
+using Common.Interaces;
+using Common.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +44,9 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
+
+
+builder.Services.AddScoped<IBadgesDAL, BadgesDALMock>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
