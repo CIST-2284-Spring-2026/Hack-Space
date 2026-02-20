@@ -43,10 +43,13 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
+// Add Data Access Layer Services
+builder.Services.AddScoped<IBadgesDAL, BadgesDALMock>();
+
 var app = builder.Build();
 
 
-builder.Services.AddScoped<IBadgesDAL, BadgesDALMock>();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
