@@ -1,5 +1,8 @@
 @page "/create-badge"
 @rendermode InteractiveServer
+@inject IBadgesDAL BadgesDAL
+@inject NavigationManager NavigationManager
+@using Common.DAL
 @using Common.Models
  
 <h3>Create Badge Page</h3>
@@ -37,9 +40,10 @@
 @code {
     private Badge badge = new Badge();
     private string message = "Please enter information and press submit.";
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
-        // Logic to handle badge creation
-        message = $"Badge Created: {badge.Title}, {badge.Description}";
+        // Add the badge to the data service
+        await BadgesDAL.AddBadgeAsync(badge);
+        NavigationManager.NavigateTo(uri:"/badges");
     }
 }

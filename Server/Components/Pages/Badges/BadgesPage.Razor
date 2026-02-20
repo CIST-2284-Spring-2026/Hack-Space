@@ -20,13 +20,14 @@ else
         @foreach (var badge in badges)
         {
             <li class="list-group-item">
-                @badge.Title - @(badge.IsVisible ? "Published" : "In review")
+                @badge.Title - @(badge.IsVisible ? "Published" : "In review") <button               
+                 class="btn btn-sm btn-primary float-end" @onclick="() => EditBadge(badge.Id)">Edit</button>
             </li>
         }
     </ul>
+    <button class="btn btn-success mt-3" @onclick="CreateNewBadge">Create New Badge</button>
 }
  
-
 @code {
     List<Badge>? badges;
  
@@ -34,4 +35,17 @@ else
     {
         badges = await BadgesDAL.GetBadgesAsync();
     }
+ 
+    private void CreateNewBadge()
+    {
+        NavigationManager.NavigateTo("/badge-edit");
+    }
+ 
+    private void EditBadge(Guid id)
+    {
+        // For simplicity, we'll just navigate to the create page for now.
+        // In a real app, you'd want to pass the badge ID and load it in the edit page.
+        NavigationManager.NavigateTo($"/badge-edit/{id}");
+    }
+ 
 }
