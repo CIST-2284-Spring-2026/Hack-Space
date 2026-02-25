@@ -32,6 +32,7 @@
     </div>
  
     <button class="btn btn-primary" type="submit">Create Badge</button>
+    <button class="btn btn-secodary" type="button" @onclick= "CancelEdit">Cancel</button>
 </EditForm>
  
 <p>
@@ -45,5 +46,10 @@
         // Add the badge to the data service
         await BadgesDAL.AddBadgeAsync(badge);
         NavigationManager.NavigateTo(uri:"/badges");
+    }
+
+    private void CancelEdit()
+    {
+        NavigationManager.NavigateTo(uri: "/badges");
     }
 }
