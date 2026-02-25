@@ -21,16 +21,26 @@ else
         {
             <li class="list-group-item">
                 @badge.Title - @(badge.IsVisible ? "Published" : "In review") 
-                <button class="btn btn-sm btn-primary float-end" @onclick="() => ViewBadge(badge.Id)">View</button>
-                <button class="btn btn-sm btn-primary float-end" @onclick="() => EditBadge(badge.Id)">Edit</button>
-            </li>
+                <button class="btn btn-sm btn-primary float-end" @onclick="() => ViewBadge(badge.Id)">View</button>&nbsp;
+                <button class="btn btn-sm btn-primary float-end" @onclick="() => EditBadge(badge.Id)">Edit</button>&nbsp;
+                <button class=”btn btn-sm btn-danger float-end” @onclick=”() => DeleteBadge(badge.Id)”>Delete</button>&nbsp;
+         </li>
         }
     </ul>
     <button class="btn btn-success mt-3" @onclick="CreateNewBadge">Create New Badge</button>
 }
  
+@if(showDeleteConfirm)
+{
+<p>Are you sure?</p>
+<button class=”btn btn-danger mt-3″ @onclick=”ConfirmDelete”>Confirm Delete</button>
+<button class=”btn btn-secondary mt-3″ @onclick=”CancelDelete”>Cancel Delete</button>
+}
+
 @code {
     List<Badge>? badges;
+    Guid deleteId = Guid.Empty;
+    bool showDeleteConfirm = false;
  
     protected override async Task OnInitializedAsync()
     {
@@ -52,7 +62,24 @@ else
         NavigationManager.NavigateTo(uri: $"/badge/{id}");
     }
  
-
+private async Task DeleteBadge(Guid id)
+{
+    deleteId = id;
+    showDeleteConfirm = true;
+}
+ 
+private async Task ConfirmDelete()
+{
+    await BadgesDAL.DeleteBadgeAsync(deleteId);
+    deleteId = Guid.Empty;
+    showDeleteConfirm = false;
+}
+ 
+private void CancelDelete()
+{
+    deleteId = Guid.Empty;
+    showDeleteConfirm = false;
+}
 
 
 

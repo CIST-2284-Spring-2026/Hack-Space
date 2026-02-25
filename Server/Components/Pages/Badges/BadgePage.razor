@@ -1,29 +1,4 @@
 @page "/badge/{id}"
-@inject IBadgesDAL BadgesDAL
 
 <h1>Badge Page</h1>
-
-@if (badge == null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <p>Id: @badge.Id</p>
-    <p>Title: @badge.Title</p>
-    <p>Description: @badge.Description</p>
-    <p>Turn In Instructions: @badge.TurnInInstructions</p>
-    <p>Is Visible: @badge.IsVisible </p>
-
-}
-<a href = "/badges">Back to Badges list</a>
-@code{
-    [Parameter]
-    public string? Id {get; set;}
-
-    protected Badge? badge;
-    protected override async Task OnParametersSetAsync()
-    {
-       badge = await BadgesDAL.GetBadgeByIdAsync(Guid.Parse(Id));
-    }
-}
+<p></p>

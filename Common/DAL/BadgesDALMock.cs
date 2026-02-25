@@ -18,6 +18,17 @@ namespace Common.DAL
             badges?.Add(badge);
             return Task.CompletedTask;
         }
+
+        public Task DeleteBadgeAsync(Guid id)
+{
+    // find the badge and remove it from the in-memory list
+    var existingBadge = badges?.Where(b => b.Id == id).FirstOrDefault();
+    if (existingBadge != null)
+    {
+        badges?.Remove(existingBadge);
+    }
+    return Task.CompletedTask;
+}
  
         public Task<Badge?> GetBadgeByIdAsync(Guid id)
         {
