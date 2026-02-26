@@ -1,0 +1,8 @@
+@page "/subcomponents-demo/rerendering-demo-child-parent"
+<h1>Re-rendering Demo: Child to Parent</h1>
+ 
+<ReRenderingChildParentSubComponent Counter="@counter" />
+<p>Current Counter Value in parent: @counter</p>
+@code {
+    private int counter = 0;
+}

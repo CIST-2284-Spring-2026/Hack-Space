@@ -1,0 +1,17 @@
+@page "/subcomponents-demo/event-callback-with-param-demo"
+@using Server.Components.Pages
+@rendermode InteractiveServer
+ 
+<h1>Event Callback With Param Demo</h1>
+ 
+<p>Text in parent: @text</p>
+<EventCallbackWithParamSubComponent UpdateCallBack="@UpdateText" />
+ 
+@code {
+    string text = "Initial Text";
+    DateTime time = DateTime.Now;
+    private void UpdateText(string value)
+    {
+        text = value;
+    }
+}

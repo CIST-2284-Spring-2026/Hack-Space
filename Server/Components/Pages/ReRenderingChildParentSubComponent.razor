@@ -1,0 +1,17 @@
+@rendermode InteractiveServer
+ 
+<h3>Sub Component</h3>
+ 
+<p>Current Counter Value in sub component: @Counter</p>
+<button class="btn btn-primary" @onclick="IncrementCounter">Increment Counter</button>
+ 
+@code
+{
+    [Parameter]
+    public int Counter { get; set; } = 0;
+ 
+    private void IncrementCounter()
+    {
+        Counter++;
+    }
+}

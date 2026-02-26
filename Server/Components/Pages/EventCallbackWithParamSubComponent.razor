@@ -1,0 +1,17 @@
+@rendermode InteractiveServer
+ 
+<h3>Event Callback Sub Component</h3>
+<InputText class="form-control" @bind-Value="inputValue" placeholder="Enter a value" />
+<button class="btn btn-primary" @onclick="Update">Update</button>
+ 
+@code{
+    [Parameter]
+    public EventCallback<string> UpdateCallBack {get; set;}
+ 
+    private string inputValue;
+ 
+    private void Update()
+    {
+        UpdateCallBack.InvokeAsync(inputValue);
+    }
+}

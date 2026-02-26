@@ -1,0 +1,21 @@
+@page "/subcomponents-demo/rerendering-demo"
+@rendermode InteractiveServer
+ 
+<h1>Re-rendering Demo</h1>
+ 
+<p>Current Counter Value in parent: @counter</p>
+<button class="btn btn-primary" @onclick="IncrementCounter">Increment Counter</button>
+ 
+<p>
+The counter value is passed as a parameter to the <code>ReRenderingSubComponent</code>, which will also re-render whenever the counter value changes.
+</p>
+<ReRenderingSubComponent Counter="@counter" />
+ 
+@code {
+    private int counter = 0;
+ 
+    private void IncrementCounter()
+    {
+        counter++;
+    }
+}

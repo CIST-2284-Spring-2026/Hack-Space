@@ -1,0 +1,17 @@
+@rendermode InteractiveServer
+ 
+<h3>Event Callback Sub Component</h3>
+ 
+<button class="btn btn-primary" @onclick="IncrementCounter">Increment Counter</button>
+ 
+@code{
+    [Parameter]
+    public EventCallback UpdateCountCallBack {get; set;}
+ 
+ 
+    private void IncrementCounter()
+    {
+        UpdateCountCallBack.InvokeAsync();
+    }
+ 
+}

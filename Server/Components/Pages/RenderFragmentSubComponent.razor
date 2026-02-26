@@ -1,0 +1,9 @@
+<h3>Render Fragment Sub Component</h3>
+<p>
+    Content from parent: @ChildContent
+</p>
+@code
+{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = default!;
+}

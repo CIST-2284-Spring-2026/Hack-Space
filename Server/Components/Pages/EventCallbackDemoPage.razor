@@ -1,0 +1,15 @@
+@page "/subcomponents-demo/event-callback-demo"
+
+ 
+<h1>Event Callback Demo</h1>
+ 
+<p>Count in parent: @count</p>
+<EventCallbackSubComponent UpdateCountCallBack="UpdateCount" />
+ 
+@code {
+    int count;
+    private void UpdateCount()
+    {
+        this.count++;
+    }
+   }

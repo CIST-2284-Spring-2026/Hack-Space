@@ -1,0 +1,23 @@
+@page "/subcomponents-demo/ref-demo"
+@rendermode InteractiveServer
+ 
+<h3>Ref Demo Parent Page</h3>
+<RefDemoChildComponent @ref="childComponentRef" />
+ 
+<InputText @bind-Value="inputText" placeholder="Enter text to send to child component" />
+ 
+<button @onclick="SendTextToChild">Send Text to Child Component</button>
+ 
+@code
+{
+    private RefDemoChildComponent childComponentRef;
+    private string inputText = string.Empty;
+ 
+    private void SendTextToChild()
+    {
+        if (childComponentRef != null)
+        {
+            childComponentRef.SomeMethod(inputText);
+        }
+    }
+}
