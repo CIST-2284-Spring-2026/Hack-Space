@@ -1,0 +1,120 @@
+@page "/evaluators"
+@using Common.Interfaces
+@rendermode InteractiveServer
+@inject IEvaluatorsDAL DAL
+ 
+
+
+@if (evaluators == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ListView items="evaluators" Title="Evaluators">
+        <HeaderTemplate>
+            <span>Name</span>
+        </HeaderTemplate>
+            <ItemTemplate Context="evaluator">
+            <div>
+                <strong>@evaluator.Name</strong><br />
+                @evaluator.Email
+                <button class="btn btn-sm btn-primary float-end me-2" @onclick="() => EditEvaluator(evaluator.Id)">Edit</button>
+                
+            </div>
+        </ItemTemplate>
+    </ListView>
+}<button class="btn btn-sm btn-primary" @onclick="AddEvaluator">Add Evaluator</button>
+
+
+@code
+{
+    private bool showModal = false;
+    private Evaluator? editingEvaluator = null;
+     List<Evaluator>? evaluators = null;
+ 
+    protected override async Task OnInitializedAsync()
+    {
+        evaluators = await DAL.GetAllAsync();
+        
+    }
+}
+
+@code{
+    void AddEvaluator()
+{
+    editingEvaluator = new Evaluator();
+    showModal = true;
+}
+    void EditEvaluator(Guid id)
+    {
+        Evaluator? evaluator = evaluators?.FirstOrDefault(e => e.Id == id);
+        if (evaluator is null)
+        {
+            return;
+        }
+ 
+        // Use a copy so Cancel does not mutate the list item directly.
+        editingEvaluator = new Evaluator
+        {
+            Id = evaluator.Id,
+            Name = evaluator.Name,
+            Email = evaluator.Email,
+            Background = evaluator.Background
+        };
+        showModal = true;
+    }
+ 
+    private async Task HandleValidSubmit()
+    {
+        if (editingEvaluator is null) return;
+ 
+        if (editingEvaluator.Id == Guid.Empty)
+        {
+            await DAL.AddAsync(editingEvaluator);
+        }
+        else
+        {
+            await DAL.UpdateAsync(editingEvaluator);
+        }
+        evaluators = await DAL.GetAllAsync() ?? new();
+ 
+        showModal = false;
+        editingEvaluator = null;
+    }
+ 
+    private void CancelEdit()
+    {
+        showModal = false;
+        editingEvaluator = null;
+    }
+
+    
+}
+
+
+<Modal Show="@showModal" OnCancel="CancelEdit" Title="Edit Evaluator" CancelButtonText="Cancel" SubmitButtonText="Submit" SubmitButtonForm="editForm">
+    @if (editingEvaluator is not null)
+    {
+        <EditForm Model="@editingEvaluator" id="editForm" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <InputText class="form-control" @bind-Value="editingEvaluator.Name" />
+                <ValidationMessage For="@(() => editingEvaluator.Name)" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <InputText class="form-control" @bind-Value="editingEvaluator.Email" />
+                <ValidationMessage For="@(() => editingEvaluator.Email)" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Background</label>
+                <InputText class="form-control" @bind-Value="editingEvaluator.Background" />
+                <ValidationMessage For="@(() => editingEvaluator.Background)" />
+            </div>
+        </EditForm>
+    }
+</Modal>
+ 
+    

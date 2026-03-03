@@ -1,0 +1,47 @@
+@typeparam TModel
+ 
+@if (Title != null)
+{
+    <h3>@Title</h3>
+}
+ 
+@if (items == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (items.Count == 0)
+{
+    <p><em>No items to display.</em></p>
+}
+else
+{
+    @if (HeaderTemplate != null)
+    {
+        <div class="list-header">
+            @HeaderTemplate
+        </div>
+    }
+    <ul class="list-group">
+        @foreach (var item in items)
+        {
+            <li class="list-group-item">
+                @ItemTemplate(item)
+            </li>
+        }
+    </ul>
+}
+ 
+@code
+{
+    [Parameter]
+    public string Title { get; set; } = "List View";
+ 
+    [Parameter]
+    public List<TModel>? items { get; set; }
+ 
+    [Parameter]
+    public RenderFragment HeaderTemplate { get; set; } = default!;
+ 
+    [Parameter]
+    public RenderFragment<TModel> ItemTemplate { get; set; } = default!;
+}

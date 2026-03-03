@@ -7,6 +7,7 @@ using Server.Components.Account;
 using Server.Data;
 using Common.Interaces;
 using Common.DAL;
+using Common.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,7 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 
 // Add Data Access Layer Services
 builder.Services.AddScoped<IBadgesDAL, BadgesDALMock>();
+builder.Services.AddSingleton<IEvaluatorsDAL, EvaluatorsDALMock>();
 
 var app = builder.Build();
 

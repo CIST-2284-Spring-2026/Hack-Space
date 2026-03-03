@@ -29,7 +29,10 @@ else
     <button class="btn btn-success mt-3" @onclick="CreateNewBadge">Create New Badge</button>
 }
  
-
+<Modal Show="@showDeleteConfirm" Title="Delete Badge" SubmitButtonText="Delete" SubmitButtonClass="btn-danger"
+       OnSubmit="ConfirmDelete" CancelButtonText="Cancel" CancelButtonClass="btn-secondary" OnCancel="CancelDelete">
+    <p>Are you sure you want to delete:</p>
+</Modal>
 
 @code {
     List<Badge>? badges;

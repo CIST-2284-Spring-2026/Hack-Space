@@ -1,0 +1,48 @@
+@if (Show)
+{
+    <div class="modal-backdrop fade show"></div>
+ 
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Title</h5>
+                    <button type="button" class="btn-close" @onclick="OnCancel" />
+                </div>
+                <div class="modal-body">
+                    @ChildContent
+                </div>
+                <div class="modal-footer">
+                    <button class="btn @CancelButtonClass" @onclick="OnCancel">
+                        @CancelButtonText
+                    </button>
+                    @if (SubmitButtonForm is null)
+                    {
+                        <button type="button" class="btn @SubmitButtonClass" @onclick="OnSubmit">
+                            @SubmitButtonText
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn @SubmitButtonClass" form="@SubmitButtonForm">
+                            @SubmitButtonText
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+ 
+@code {
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public string Title { get; set; } = "Dialog";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? SubmitButtonForm { get; set; } = null;
+    [Parameter] public string SubmitButtonText { get; set; } = "Submit";
+    [Parameter] public string SubmitButtonClass { get; set; } = "btn-primary";
+    [Parameter] public EventCallback OnSubmit { get; set; }
+    [Parameter] public string CancelButtonText { get; set; } = "Close";
+    [Parameter] public string CancelButtonClass { get; set; } = "btn-secondary";
+    [Parameter] public EventCallback OnCancel { get; set; }
+}
