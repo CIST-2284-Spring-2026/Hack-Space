@@ -1,51 +1,72 @@
 @page "/create-badge"
+@page "/edit-badge/{Id}"
 @rendermode InteractiveServer
 @inject IBadgesDAL BadgesDAL
 @inject NavigationManager NavigationManager
 @using Common.DAL
 @using Common.Models
- 
+
 <h3>Create Badge Page</h3>
- 
+
 <EditForm Model="@badge" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
- 
+
     <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <InputText class="form-control" id="title" @bind-Value="badge.Title" />
     </div>
- 
+
     <div class="mb-3">
         <label class="form-label" for="description">Description</label>
         <InputTextArea class="form-control" id="description" @bind-Value="badge.Description" />
     </div>
- 
+
     <div class="mb-3">
         <label class="form-label" for="turnInInstructions">Turn In Instructions</label>
         <InputTextArea class="form-control" id="turnInInstructions" @bind-Value="badge.TurnInInstructions" />
     </div>
- 
+
     <div class="mb-3">
         <InputCheckbox class="form-check-input" id="isVisible" @bind-Value="badge.IsVisible" />
         <label class="form-label" for="isVisible">Is Visible</label>
     </div>
- 
+
     <button class="btn btn-primary" type="submit">Create Badge</button>
-    <button class="btn btn-secodary" type="button" @onclick= "CancelEdit">Cancel</button>
+    <button class="btn btn-secodary" type="button" @onclick="CancelEdit">Cancel</button>
 </EditForm>
- 
+
 <p>
     @message
 </p>
 @code {
-    private Badge badge = new Badge();
+    [Parameter]
+    public string? Id { get; set; }
+    private Badge? badge;
     private string message = "Please enter information and press submit.";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(Id))
+        {
+            // If Id is provided, we are in edit mode, so load the existing badge
+            if (Guid.TryParse(Id, out var badgeId))
+            {
+                badge = await BadgesDAL.GetBadgeByIdAsync(badgeId);
+            }
+            else
+            {
+                badge = new Badge();
+            }
+        }
+    }
     private async Task HandleValidSubmit()
     {
+        //TODO: Check to see if it is an existing badge or new badge and update or add accordingly. RJG
+
         // Add the badge to the data service
         await BadgesDAL.AddBadgeAsync(badge);
-        NavigationManager.NavigateTo(uri:"/badges");
+        NavigationManager.NavigateTo(uri: "/badges");
     }
 
     private void CancelEdit()
