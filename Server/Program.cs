@@ -8,7 +8,7 @@ using Server.Data;
 using Common.Interaces;
 using Common.DAL;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace HackerSpace{public class Program{public static void Main(string[] args){var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -77,4 +77,22 @@ app.MapRazorComponents<App>()
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
+RunMigrations(app);
 app.Run();
+}
+
+private static void RunMigrations(WebApplication app)
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        db.Database.Migrate();
+    }
+}
+
+}
+
+}
+
+
+
