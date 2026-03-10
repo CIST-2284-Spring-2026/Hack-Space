@@ -12,7 +12,7 @@ namespace Common.DAL
             new Evaluator {Id = Guid.NewGuid(), Name = "Jane Smith", Email = "jane.smith@example.com", Background = "Moderator" },
             new Evaluator {Id = Guid.NewGuid(), Name = "Bob Johnson", Email = "bob.johnson@example.com", Background = "Reviewer" }
         };
- 
+
         public Task<List<Evaluator>?> GetAllAsync()
         {
             return Task.FromResult(evaluators);
@@ -56,3 +56,4 @@ namespace Common.DAL
         }
     }
 }
+

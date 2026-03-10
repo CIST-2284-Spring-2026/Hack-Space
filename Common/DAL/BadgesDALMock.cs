@@ -12,6 +12,8 @@ namespace Common.DAL
             new Badge {Id = Guid.NewGuid(), Title = "Community Helper", Description = "Awarded for helping other members of the community.", TurnInInstructions = "Assist other members in the community forums." }
         };
  
+      
+ 
         public Task AddBadgeAsync(Badge badge)
         {
             badge.Id = Guid.NewGuid();

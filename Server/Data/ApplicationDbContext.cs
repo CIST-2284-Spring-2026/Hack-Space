@@ -5,4 +5,5 @@ namespace Server.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
+    public object Evaluators { get; internal set; }
 }
