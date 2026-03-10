@@ -8,4 +8,5 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     	
 public DbSet<Badge> Badges { get; set; } = default!;
+public DbSet<Evaluator> Evaluators { get; set; }
 }

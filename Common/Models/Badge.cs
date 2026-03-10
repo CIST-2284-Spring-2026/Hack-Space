@@ -18,5 +18,7 @@ namespace Common.Models
         [MinLength(20)]
         public string TurnInInstructions { get; set; } = string.Empty;
         public bool IsVisible { get; set; } = false;
+
+        public List<Evaluator> Evaluators { get; set; } = new List<Evaluator>();
     }
 }
