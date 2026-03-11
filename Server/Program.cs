@@ -44,7 +44,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 // Add Data Access Layer Services
-builder.Services.AddScoped<IBadgesDAL, BadgesDALMock>();
+builder.Services.AddTransient<IBadgesDAL, BadgesDALMock>();
 
 var app = builder.Build();
 
