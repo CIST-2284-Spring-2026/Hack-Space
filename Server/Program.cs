@@ -7,6 +7,9 @@ using Server.Components.Account;
 using Server.Data;
 using Common.Interaces;
 using Common.DAL;
+using Microsoft.AspNetCore.Authorization;
+using Server.Authorization.Handlers;
+using Server.Authorization.Policies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,11 +40,22 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
         options.SignIn.RequireConfirmedAccount = true;
         options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
     })
+    	
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+// Add Authorization Handlers and Policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("EduEmailPolicy", policy =>
+        policy.Requirements.Add(new EduEmailRequirement()));
+});
+ 
+builder.Services.AddScoped<IAuthorizationHandler, EduEmailHandler>();
 
 // Add Data Access Layer Services
 builder.Services.AddTransient<IBadgesDAL, BadgesDALMock>();

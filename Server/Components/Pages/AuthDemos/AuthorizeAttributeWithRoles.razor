@@ -1,0 +1,12 @@
+@page "/auth-demos/authorize-attribute-with-roles"
+@using Microsoft.AspNetCore.Authorization
+ 
+@attribute [Authorize(Roles = "Admin")]
+ 
+<h1>Page Authentication with Roles Demo</h1>
+<p>
+    This page demonstrates how to use the <code>&#64;attribute [Authorize(Roles = "Admin")]</code> directive to protect
+    a page based on user roles. Only users with the "Admin" role will be able to access this page. If you are not
+    authenticated or do not have the required role, you will be redirected to the login page or shown an access denied
+    message.
+</p>

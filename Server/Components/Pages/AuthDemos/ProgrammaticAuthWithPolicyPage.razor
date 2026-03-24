@@ -1,0 +1,36 @@
+@page "/auth-demos/programmatic-with-policy"
+@using Microsoft.AspNetCore.Authorization
+ 
+@inject IAuthorizationService AuthorizationService
+@inject AuthenticationStateProvider AuthStateProvider
+ 
+<h1>Programmatic Authentication with Policy Demo</h1>
+<p>
+    This page demonstrates how to perform programmatic authentication and authorization using a custom policy. In this
+    case, the policy checks if the user's email ends with ".edu". Use the buttons below to simulate logging in as
+    different users and see how the policy affects access to protected content.
+</p>
+ 
+@if (isAcadmicUser)
+{
+    <p>Your academic discount will be automatically applied during checkout.</p>
+}
+else
+{
+    <p>No academic discount.</p>
+}
+ 
+@code {
+ 
+    bool isAcadmicUser = false;
+ 
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+ 
+        var result = await AuthorizationService.AuthorizeAsync(user, "EduEmailPolicy");
+ 
+        isAcadmicUser = result.Succeeded;
+    }
+}

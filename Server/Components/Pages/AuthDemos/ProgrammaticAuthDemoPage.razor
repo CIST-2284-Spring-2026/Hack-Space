@@ -1,0 +1,29 @@
+@page "/auth-demos/programmatic"
+@inject AuthenticationStateProvider AuthStateProvider
+ 
+<h1>Programmatic Authentication Demo</h1>
+<p>
+    This page demonstrates how to perform programmatic authentication in a Blazor application. You can use this approach
+    to authenticate users without relying on the built-in authentication components.
+</p>
+ 
+<p>@message</p>
+@code {
+    string message = "Not authenticated";
+ 
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+ 
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            message = $"You are logged in. Welcome {user.Identity.Name}!";
+        }
+        else
+        {
+            message = "User is not logged in";
+        }
+    }
+ 
+}

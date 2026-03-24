@@ -1,0 +1,18 @@
+@page "/auth-demos/authorize-component-with-policy"
+@using Client.Pages
+ 
+<h1>Authorize Component with Policy Demo</h1>
+ 
+<p>
+    This page demonstrates how to use the AuthorizeView component with a custom policy to conditionally display content
+    based on specific requirements. In this case, the policy checks if the user's email ends with ".edu".
+</p>
+ 
+<AuthorizeView Policy="EduEmailPolicy">
+    <Authorized>
+        <p>Welcome, Academic User! You are eligible for an academic discount.</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>You do not meet the requirements for an academic discount.</p>
+    </NotAuthorized>
+</AuthorizeView>

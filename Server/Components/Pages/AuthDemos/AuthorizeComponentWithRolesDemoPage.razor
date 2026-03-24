@@ -1,0 +1,28 @@
+@page "/auth-demos/authorize-component-with-roles"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+ 
+<h1>Authorize Component with Roles Demo</h1>
+<p>
+    This page demonstrates how to use the AuthorizeView component to conditionally display content based on user roles.
+    Only users with the "Admin" role will see the protected content.
+</p>
+ 
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <p>Welcome, Admin! You have access to this content.</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>You do not have the necessary permissions to view this content. Please log in with an account that has the
+            "Admin" role.</p>
+        </NotAuthorized>
+    </AuthorizeView>
+ 
+    <AuthorizeView>
+        <Authorized>
+            <p>This content is visible to all authenticated users, regardless of their roles.</p>
+        </Authorized>
+        <NotAuthorized>
+            <p>Please log in to see this content.</p>
+        </NotAuthorized>
+    </AuthorizeView>

@@ -1,0 +1,9 @@
+@page "/auth-demos/authorize-attribute-with-policy"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Policy = "EduEmailPolicy")]
+ 
+<h1>Authorize Attribute with Policy Demo</h1>
+<p>
+    This page demonstrates how to use the Authorize attribute with a custom policy to restrict access based on specific
+    requirements. In this case, the policy checks if the user's email ends with ".edu".
+</p>
