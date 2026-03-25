@@ -29,7 +29,8 @@ else
     <button class="btn btn-success mt-3" @onclick="CreateNewBadge">Create New Badge</button>
 }
  
-
+@* </AuthorizeView> 
+<AuthorizeView Roles="Admin, Editors">  *@
 
 @code {
     List<Badge>? badges;

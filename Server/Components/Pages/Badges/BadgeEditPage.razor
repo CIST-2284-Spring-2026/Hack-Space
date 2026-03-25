@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @using Common.DAL
 @using Common.Models
+@attribute [Authorize(Roles = "Admin, Editors")]
  
 <h3>Create Badge Page</h3>
  
