@@ -1,0 +1,162 @@
+@page "/admin/user-management"
+@using Common.DTOs
+@using Common.Interfaces
+@rendermode InteractiveServer
+ 
+@attribute [Authorize(Roles = "Admin")]
+ 
+@inject IUsersDAL DAL
+ 
+<h3>User Management</h3>
+ 
+@* <!-- User List -->
+<ListView Items="users" Title="Users">
+    <HeaderTemplate>
+        <span>Users</span>
+    </HeaderTemplate>
+    <ItemTemplate Context="user">
+        @user.Email
+        <button class="btn btn-small btn-danger float-end me-2" @onclick="() => Delete(user)">Delete</button>
+        <button class="btn btn-small btn-primary float-end me-2" @onclick="() => EditUser(user)">Edit</button>
+    </ItemTemplate>
+</ListView>
+<button class="btn btn-success" @onclick="AddUserAsync">Add New User</button>
+ 
+<!-- Edit User Modal -->
+<Modal Show="@showEditModal" Title="Edit User" SubmitButtonText="Submit" SubmitButtonForm="editForm"
+       CancelButtonText="Cancel" OnCancel="CancelEdit">
+    @if (selectedUser != null)
+    {
+        <EditForm Model="@selectedUser" id="editForm" OnValidSubmit="SaveUserChanges">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <InputText id="email" class="form-control" @bind-Value="selectedUser.Email" />
+                <ValidationMessage For="@(() => selectedUser.Email)" />
+            </div>
+            <div class="mb-3">
+                <label for="emailConfirmed" class="form-label">Email Confirmed</label>
+                <InputCheckbox id="emailConfirmed" class="form-check-input" @bind-Value="selectedUser.EmailConfirmed" />
+                <ValidationMessage For="@(() => selectedUser.EmailConfirmed)" />
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <InputText id="password" type="password" class="form-control" @bind-Value="selectedUser.Password" />
+                <ValidationMessage For="@(() => selectedUser.Password)" />
+            </div>
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <InputText id="confirmPassword" type="password" class="form-control"
+                           @bind-Value="selectedUser.ConfirmPassword" />
+                <ValidationMessage For="@(() => selectedUser.ConfirmPassword)" />
+            </div>
+ 
+            <!-- Roles -->
+            <div class="mb-3">
+                <ListView Title="Roles This User is In" Items="@selectedUser.RoleSelections">
+                    <ItemTemplate Context="roleSelection">
+                        <div @key="roleSelection.RoleName">
+                            @roleSelection.RoleName
+                            <InputCheckbox class="form-check-input float-end" @bind-Value="roleSelection.IsSelected" />
+                        </div>
+                    </ItemTemplate>
+                </ListView>
+            </div>
+        </EditForm>
+    }
+</Modal>
+ 
+<!-- Confirm Delete Modal -->
+<Modal Show="showDeleteModal" Title="Confirm Delete" SubmitButtonText="Delete" SubmitButtonClass="btn-danger"
+       OnSubmit="ConfirmDeleteUser" OnCancel="CancelDelete">
+    Are you sure you want to delete this user?
+</Modal>
+ 
+ 
+@code
+{
+    private List<UserDto>? users;
+    private UserDto? selectedUser;
+ 
+    private bool showEditModal = false;
+    private bool showDeleteModal = false;
+ 
+    protected override async Task OnInitializedAsync()
+    {
+        users = await DAL.GetAllUsersAsync();
+    }
+ 
+    private async Task AddUserAsync()
+    {
+        selectedUser = await DAL.CreateNewUserAsync();
+        showEditModal = true;
+    }
+ 
+    private void EditUser(UserDto userDto)
+    {
+        selectedUser = new UserDto()
+        {
+            Id = userDto.Id,
+            Email = userDto.Email,
+            EmailConfirmed = userDto.EmailConfirmed,
+            Password = userDto.Password,
+            ConfirmPassword = userDto.ConfirmPassword,
+            RoleSelections = userDto.RoleSelections.Select(r => new RoleSelection
+            {
+                RoleName = r.RoleName,
+                IsSelected = r.IsSelected
+            }).ToList(),
+        };
+        showEditModal = true;
+    }
+ 
+    private async Task SaveUserChanges()
+    {
+        if (selectedUser == null)
+        {
+            return;
+        }
+        if (string.IsNullOrEmpty(selectedUser.Id))
+        {
+            // New user
+            await DAL.AddUserAsync(selectedUser);
+        }
+        else
+        {
+            // Existing user
+            await DAL.UpdateUserAsync(selectedUser);
+        }
+ 
+        users = await DAL.GetAllUsersAsync();
+        showEditModal = false;
+        selectedUser = null;
+    }
+ 
+    private void Delete(UserDto userDto)
+    {
+        selectedUser = userDto;
+        showDeleteModal = true;
+    }
+ 
+    private void CancelDelete()
+    {
+        selectedUser = null;
+        showDeleteModal = false;
+    }
+    private async Task ConfirmDeleteUser()
+    {
+        if (selectedUser != null)
+        {
+            await DAL.DeleteUserAsync(selectedUser.Id);
+        }
+        showDeleteModal = false;
+        selectedUser = null;
+        users = await DAL.GetAllUsersAsync();
+    }
+ 
+    private void CancelEdit()
+    {
+        selectedUser = null;
+        showEditModal = false;
+    }
+} *@
