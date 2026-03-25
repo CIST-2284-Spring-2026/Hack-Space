@@ -10,6 +10,8 @@ using Common.DAL;
 using Microsoft.AspNetCore.Authorization;
 using Server.Authorization.Handlers;
 using Server.Authorization.Policies;
+using Server.Data.DALs;
+using Common.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +60,8 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<IAuthorizationHandler, EduEmailHandler>();
 
 // Add Data Access Layer Services
+	
+builder.Services.AddTransient<IUsersDAL, UsersDAL>();
 builder.Services.AddTransient<IBadgesDAL, BadgesDALMock>();
 
 var app = builder.Build();
