@@ -95,4 +95,43 @@ app.MapRazorComponents<App>()
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
+// Add default admin and roles if they don't exist
+ 
+using (var scope = app.Services.CreateScope())
+{
+    // Add roles if they don't exist
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roleNames = new[] { "Admin", "Editors", "Evaluators" };
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            IdentityRole role = new IdentityRole(roleName);
+            await roleManager.CreateAsync(role);
+        }
+    }
+ 
+    // Add default admin user if they don't exist
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    string? email = builder.Configuration.GetSection("Admin:Email").Value;
+    string? password = builder.Configuration.GetSection("Admin:Password").Value;
+ 
+    if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+    {
+        var user = new ApplicationUser();
+        user.Email = email;
+        user.UserName = email;
+ 
+        // Optional, add if you want the account live right away without email confirmation
+        // user.EmailConfirmed = true;
+ 
+        var results = await userManager.CreateAsync(user, password);
+ 
+        if (results.Succeeded)
+        {
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
+    }
+}
+
 app.Run();
