@@ -62,7 +62,9 @@ builder.Services.AddScoped<IAuthorizationHandler, EduEmailHandler>();
 // Add Data Access Layer Services
 	
 builder.Services.AddTransient<IUsersDAL, UsersDAL>();
+#pragma warning disable CS0436 // Type conflicts with imported type
 builder.Services.AddTransient<IBadgesDAL, BadgesDALMock>();
+
 
 var app = builder.Build();
 
@@ -111,6 +113,17 @@ using (var scope = app.Services.CreateScope())
         }
     }
  
+ // Add API controllers for server-side API endpoints
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler =
+            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    }); 
+
+    // For API controllers
+    app.MapControllers()
+    .RequireAuthorization(); // Require authorization for all API endpoints by default. You can override this with [AllowAnonymous] on specific controllers or actions.
     // Add default admin user if they don't exist
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     string? email = builder.Configuration.GetSection("Admin:Email").Value;

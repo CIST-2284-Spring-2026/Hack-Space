@@ -4,16 +4,8 @@ using Microsoft.AspNetCore.Identity;
  
 namespace Server.Data.DALs
 {
-    public class UsersDAL : IUsersDAL
+    public class UsersDAL(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) : IUsersDAL
     {
-        private UserManager<ApplicationUser> userManager;
-        private RoleManager<IdentityRole> roleManager;
-        public UsersDAL(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
-        }
- 
         public async Task<List<UserDto>> GetAllUsersAsync()
         {
             List<UserDto> userDtos = new List<UserDto>();

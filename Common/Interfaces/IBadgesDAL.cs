@@ -10,7 +10,7 @@ namespace Common.Interaces
         public Task<Badge?> GetBadgeByIdAsync(Guid id);
         public Task AddBadgeAsync(Badge badge);
         public Task UpdateBadgeAsync(Badge badge);
-
-        
+        Task GetAllAsync();
+        Task GetAsync(Guid id);
     }
 }
