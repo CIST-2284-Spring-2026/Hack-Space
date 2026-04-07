@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\SharedComponents\SharedComponents.csproj" />
   </ItemGroup>
 
 </Project>
