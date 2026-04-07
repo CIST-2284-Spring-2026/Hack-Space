@@ -1,9 +1,13 @@
 @page "/create-badge"
-@rendermode InteractiveServer
-@inject IBadgesDAL BadgesDAL
+@rendermode InteractiveWebAssembly
+
 @inject NavigationManager NavigationManager
+@inject BadgesDAL BadgesDAL
+@using Client.DALs
 @using Common.DAL
 @using Common.Models
+@inject IBadgesDAL BadgesDAL
+
 @attribute [Authorize(Roles = "Admin, Editors")]
  
 <h3>Create Badge Page</h3>
@@ -45,7 +49,7 @@
     private async Task HandleValidSubmit()
     {
         // Add the badge to the data service
-        await BadgesDAL.AddBadgeAsync(badge);
+        await BadgesDAL.AddBadgeAync(badge);
         NavigationManager.NavigateTo(uri:"/badges");
     }
 

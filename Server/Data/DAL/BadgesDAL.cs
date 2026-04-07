@@ -54,7 +54,7 @@ namespace Server.Data.DALs
         }
     }
 
-    public interface IBadgesDAl
+    public interface IBadgesDA1
     {
     }
 }
