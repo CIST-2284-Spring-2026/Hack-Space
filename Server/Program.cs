@@ -5,9 +5,12 @@ using Client.Pages;
 using Server.Components;
 using Server.Components.Account;
 using Server.Data;
-using Common.Interaces;
-using Common.DAL;
 using Common.Interfaces;
+using Common.DAL;
+using Microsoft.AspNetCore.Authorization;
+
+using Server.Data.DALs;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,8 +48,8 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 // Add Data Access Layer Services
-builder.Services.AddScoped<IBadgesDAL, BadgesDALMock>();
-builder.Services.AddSingleton<IEvaluatorsDAL, EvaluatorsDALMock>();
+	
+
 
 var app = builder.Build();
 
