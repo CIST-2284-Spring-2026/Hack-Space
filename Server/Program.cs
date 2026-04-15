@@ -6,7 +6,7 @@ using Server.Components;
 using Server.Components.Account;
 using Server.Data;
 using Common.Interaces;
-using Common.DAL;
+using Common.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Server.Authorization.Handlers;
 using Server.Authorization.Policies;
@@ -62,7 +62,10 @@ builder.Services.AddScoped<IAuthorizationHandler, EduEmailHandler>();
 // Add Data Access Layer Services
 	
 builder.Services.AddTransient<IUsersDAL, UsersDAL>();
-builder.Services.AddTransient<IBadgesDAL, BadgesDALMock>();
+builder.Services.AddTransient<IBadgeViewDAL, BadgeViewServerDAL>();
+builder.Services.AddTransient<IBadgeListDAL, BadgeListServerDAL>();
+builder.Services.AddTransient<IBadgeEditDAL, BadgeEditServerDAL>();
+builder.Services.AddTransient<IEvaluatorListDAL, EvaluatorListServerDAL>();
 
 var app = builder.Build();
 
