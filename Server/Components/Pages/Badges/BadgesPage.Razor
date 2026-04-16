@@ -3,6 +3,10 @@
 @inject IBadgesDAL BadgesDAL
 @inject NavigationManager NavigationManager
  
+ 		
+@attribute [StreamRendering]
+<p>Render mode: @renderMode</p>
+
 <h1>Badges</h1>
 <p>Here you can view and manage your badges.</p>
  
@@ -39,7 +43,13 @@ else
     {
         badges = await BadgesDAL.GetBadgesAsync();
     }
- 
+    	
+    string renderMode = "tbd";
+
+    protected override async Task OnInitializedAsync()
+    {
+        	renderMode = RendererInfo.Name;
+    }
     private void CreateNewBadge()
     {
         NavigationManager.NavigateTo(uri: "/badge-edit");
@@ -55,7 +65,7 @@ else
         NavigationManager.NavigateTo(uri: $"/badge/{id}");
     }
  
-
+   
 
 
 

@@ -1,5 +1,11 @@
 @page "/badge/{id}"
+@using Microsoft.AspNetCore.Mvc.Rendering
 @inject IBadgesDAL BadgesDAL
+
+<p>Render mode: @renderMode</p>
+	
+	
+@attribute [StreamRendering]
 
 <h1>Badge Page</h1>
 
@@ -17,13 +23,21 @@ else
 
 }
 <a href = "/badges">Back to Badges list</a>
+
+
 @code{
     [Parameter]
     public string? Id {get; set;}
-
+	
+    string renderMode = "tbd";
     protected Badge? badge;
     protected override async Task OnParametersSetAsync()
     {
        badge = await BadgesDAL.GetBadgeByIdAsync(Guid.Parse(Id));
+    }
+     protected override async Task OnInitializedAsync()
+    {
+        	
+    renderMode = RendererInfo.Name;
     }
 }

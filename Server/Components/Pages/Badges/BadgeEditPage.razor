@@ -4,6 +4,8 @@
 @inject NavigationManager NavigationManager
 @using Common.DAL
 @using Common.Models
+<p>Render mode: @renderMode</p>
+@attribute [StreamRendering]
 @attribute [Authorize(Roles = "Admin, Editors")]
  
 <h3>Create Badge Page</h3>
@@ -48,7 +50,12 @@
         await BadgesDAL.AddBadgeAsync(badge);
         NavigationManager.NavigateTo(uri:"/badges");
     }
+string renderMode = "tbd";
 
+    protected override async Task OnInitializedAsync()
+    {
+        	renderMode = RendererInfo.Name;
+    }
     private void CancelEdit()
     {
         NavigationManager.NavigateTo(uri: "/badges");
