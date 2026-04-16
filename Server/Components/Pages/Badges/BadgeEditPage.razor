@@ -61,3 +61,40 @@ string renderMode = "tbd";
         NavigationManager.NavigateTo(uri: "/badges");
     }
 }
+
+[Parameter]
+public string? Id { get; set; }
+private Guid badgeId = Guid.Empty;
+private Badge? badge = null;
+ 
+private string message = "Please enter information and press submit.";
+ 
+protected override async Task OnParametersSetAsync()
+{
+    renderMode = RendererInfo.Name;
+ 
+    badgeId = Id == null ? Guid.Empty : Guid.Parse(Id);
+}
+ 
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    renderMode = RendererInfo.Name;
+ 
+    if (badge?.Id != badgeId)
+    {
+        BadgeEditDto? dto = await DAL.GetBadgeEditDtoAsync(badgeId);
+        if (dto != null)
+        {
+            badge = dto.Badge;
+            evaluators = dto.Evaluators;
+            StateHasChanged();
+        }
+    }
+}
+protected override async Task OnInitializedAsync()
+{
+    renderMode = RendererInfo.Name;
+ 
+    // Delay 3 seconds to simulate loading time
+    await Task.Delay(3000); 
+}

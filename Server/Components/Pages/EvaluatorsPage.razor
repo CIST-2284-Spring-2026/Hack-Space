@@ -1,0 +1,20 @@
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (firstRender)
+    {
+        renderMode = RendererInfo.Name;
+        if(evaluators == null)
+        {
+            EvaluatorListDto dto = await DAL.GetDtoAsync();
+            evaluators = dto.Evaluators;
+            badges = dto.Badges;
+        }
+        StateHasChanged();
+    }
+}
+protected override async Task OnInitializedAsync()
+{
+    renderMode = RendererInfo.Name;
+    // wait 3 seconds to simulate loading delay
+    await Task.Delay(3000);
+}
